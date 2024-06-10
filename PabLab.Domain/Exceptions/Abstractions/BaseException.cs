@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace PabLab.Domain.Exceptions;
+namespace PabLab.Domain.Exceptions.Abstractions;
 
 public abstract class BaseException : Exception
 {

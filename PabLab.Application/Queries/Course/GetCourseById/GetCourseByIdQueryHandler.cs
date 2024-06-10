@@ -1,27 +1,27 @@
 ﻿using AutoMapper;
 using MediatR;
-using ProductsApp.Application.Dtos;
-using ProductsApp.Domain.Abstractions;
+using PabLab.Application.Dtos.Course;
+using PabLab.Domain.Abstractions;
 
-namespace ProductsApp.Application.Queries.Products.GetProductById;
+namespace PabLab.Application.Queries.Course.GetCourseById;
 
-internal class GetCourseByIdQueryHandler : IRequestHandler<GetCourseByIdQuery, ProductDetailDto>
+internal class GetCourseByIdQueryHandler : IRequestHandler<GetCourseByIdQuery, CourseDto>
 {
-    private readonly IProductRepository _productRepository;
+    private readonly ICourseRepository _courseRepository;
     private readonly IMapper _mapper;
 
-    public GetCourseByIdQueryHandler(IProductRepository productRepository, IMapper mapper)
+    public GetCourseByIdQueryHandler(ICourseRepository courseRepository, IMapper mapper)
     {
-        _productRepository = productRepository;
+        _courseRepository = courseRepository;
         _mapper = mapper;
     }
 
-    public async Task<ProductDetailDto> Handle(GetCourseByIdQuery request, CancellationToken cancellationToken)
+    public async Task<CourseDto> Handle(GetCourseByIdQuery request, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.GetByIdAsync(request.Id, cancellationToken);
+        var course = await _courseRepository.GetByIdAsync(request.Id, cancellationToken);
 
-        var productDto = _mapper.Map<ProductDetailDto>(product);
+        var courseDto = _mapper.Map<CourseDto>(course);
 
-        return productDto;
+        return courseDto;
     }
 }

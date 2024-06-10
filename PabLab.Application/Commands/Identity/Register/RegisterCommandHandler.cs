@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using ProductsApp.Application.Identity;
-using ProductsApp.Application.Identity.Exceptions;
+using PabLab.Application.Identity;
+using PabLab.Application.Identity.Exceptions;
 
-namespace ProductsApp.Application.Commands.Identity.Register;
+namespace PabLab.Application.Commands.Identity.Register;
 
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
 {
@@ -44,7 +44,7 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand>
         var roleExists = await _roleManger.RoleExistsAsync(role);
         if (!roleExists)
             await _roleManger.CreateAsync(new IdentityRole(role));
-
-       await _userManger.AddToRoleAsync(user, role);
+        
+        await _userManger.AddToRoleAsync(user, role);
     }
 }

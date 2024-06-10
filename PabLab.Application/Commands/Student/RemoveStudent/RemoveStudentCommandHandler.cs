@@ -1,27 +1,28 @@
 ﻿using MediatR;
+using PabLab.Application.Commands.Course.RemoveCourse;
 using PabLab.Domain.Abstractions;
 using PabLab.Domain.Exceptions;
 
-namespace PabLab.Application.Commands.Course.RemoveCourse;
+namespace PabLab.Application.Commands.Student.RemoveStudent;
 
-internal class RemoveStudentCommandHandler : IRequestHandler<RemoveCourseCommand>
+internal class RemoveStudentCommandHandler : IRequestHandler<RemoveStudentCommand>
 {
-    private readonly ICourseRepository _courseRepository;
+    private readonly IStudentRepository _studentRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public RemoveStudentCommandHandler(ICourseRepository courseRepository, IUnitOfWork unitOfWork)
+    public RemoveStudentCommandHandler(IStudentRepository studentRepository, IUnitOfWork unitOfWork)
     {
-        _courseRepository = courseRepository;
+        _studentRepository = studentRepository;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(RemoveCourseCommand request, CancellationToken cancellationToken)
+    public async Task Handle(RemoveStudentCommand request, CancellationToken cancellationToken)
     {
-        var product = await _courseRepository.GetByIdAsync(request.Id, cancellationToken);
-        if (product == null)
+        var student = await _studentRepository.GetByIdAsync(request.Id, cancellationToken);
+        if (student == null)
             throw new NotFoundException(request.Id);
 
-        _courseRepository.Delete(product);
+        _studentRepository.Delete(student);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

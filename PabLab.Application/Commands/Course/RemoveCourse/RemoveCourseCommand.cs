@@ -1,5 +1,5 @@
 ﻿using MediatR;
 
-namespace ProductsApp.Application.Commands.Products.RemoveProduct;
+namespace PabLab.Application.Commands.Course.RemoveCourse;
 
 public record RemoveCourseCommand(int Id) : IRequest;

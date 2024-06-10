@@ -1,28 +1,27 @@
 ﻿using MediatR;
-using PabLab.Application.Commands.Course.RemoveCourse;
 using PabLab.Domain.Abstractions;
 using PabLab.Domain.Exceptions;
 
-namespace PabLab.Application.Commands.Student.RemoveStudent;
+namespace PabLab.Application.Commands.Enrollment.RemoveEnrollment;
 
-internal class RemoveEnrollmentCommandHandler : IRequestHandler<RemoveStudentCommand>
+internal class RemoveEnrollmentCommandHandler : IRequestHandler<RemoveEnrollmentCommand>
 {
-    private readonly IStudentRepository _studentRepository;
+    private readonly IEnrollmentRepository _enrollmentRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public RemoveEnrollmentCommandHandler(IStudentRepository studentRepository, IUnitOfWork unitOfWork)
+    public RemoveEnrollmentCommandHandler(IEnrollmentRepository enrollmentRepository, IUnitOfWork unitOfWork)
     {
-        _studentRepository = studentRepository;
+        _enrollmentRepository = enrollmentRepository;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(RemoveStudentCommand request, CancellationToken cancellationToken)
+    public async Task Handle(RemoveEnrollmentCommand request, CancellationToken cancellationToken)
     {
-        var student = await _studentRepository.GetByIdAsync(request.Id, cancellationToken);
-        if (student == null)
+        var enrollment = await _enrollmentRepository.GetByIdAsync(request.Id, cancellationToken);
+        if (enrollment == null)
             throw new NotFoundException(request.Id);
 
-        _studentRepository.Delete(student);
+        _enrollmentRepository.Delete(enrollment);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

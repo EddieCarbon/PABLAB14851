@@ -1,11 +1,13 @@
 ﻿using MediatR;
 
-namespace ProductsApp.Application.Commands.Products.UpdateProduct;
-
-public class UpdateCourseCommand : IRequest
+namespace PabLab.Application.Commands.Course.UpdateCourse
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public decimal Price { get; set; }
-    public string Description { get; set; }
+    public class UpdateCourseCommand : IRequest
+    {
+        public int CourseId { get; set; }
+        
+        public string Title { get; set; }
+        
+        public int Credits { get; set; }
+    }
 }

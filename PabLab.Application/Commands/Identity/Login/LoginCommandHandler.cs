@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using ProductsApp.Application.Dtos;
-using ProductsApp.Application.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using PabLab.Application.Dtos;
+using PabLab.Application.Identity;
+using ProductsApp.Application.Commands.Identity.Login;
 
-namespace ProductsApp.Application.Commands.Identity.Login;
+namespace PabLab.Application.Commands.Identity.Login;
 
 internal class LoginCommandHandler : IRequestHandler<LoginCommand, LoginDto>
 {

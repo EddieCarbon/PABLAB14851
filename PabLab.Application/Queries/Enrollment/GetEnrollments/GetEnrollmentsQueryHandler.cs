@@ -1,28 +1,27 @@
 ﻿using AutoMapper;
 using MediatR;
-using PabLab.Application.Dtos.Course;
-using PabLab.Application.Queries.Course.GetCourses;
+using PabLab.Application.Dtos.Enrollment;
 using PabLab.Domain.Abstractions;
 
 namespace PabLab.Application.Queries.Enrollment.GetEnrollments;
 
-internal class GetEnrollmentsQueryHandler : IRequestHandler<GetCoursesQuery, CourseListDto>
+internal class GetEnrollmentsQueryHandler : IRequestHandler<GetEnrollmentsQuery, EnrollmentListDto>
 {
-    private readonly ICourseRepository _courseRepository;
+    private readonly IEnrollmentRepository _enrollmentRepository;
     private readonly IMapper _mapper;
 
-    public GetEnrollmentsQueryHandler(ICourseRepository courseRepository, IMapper mapper)
+    public GetEnrollmentsQueryHandler(IEnrollmentRepository enrollmentRepository, IMapper mapper)
     {
-        _courseRepository = courseRepository;
+        _enrollmentRepository = enrollmentRepository;
         _mapper = mapper;
     }
 
-    public async Task<CourseListDto> Handle(GetCoursesQuery request, CancellationToken cancellationToken)
+    public async Task<EnrollmentListDto> Handle(GetEnrollmentsQuery request, CancellationToken cancellationToken)
     {
-        var products = await _courseRepository.GetAllAsync(cancellationToken);
+        var enrollments = await _enrollmentRepository.GetAllAsync(cancellationToken);
 
-        var productsDto = _mapper.Map<CourseListDto>(products);
+        var enrollmentsDto = _mapper.Map<EnrollmentListDto>(enrollments);
 
-        return productsDto;
+        return enrollmentsDto;
     }
 }

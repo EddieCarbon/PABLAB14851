@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ProductsApp.Application.Dtos;
+using PabLab.Application.Dtos;
 
 namespace ProductsApp.Application.Commands.Identity.Login;
 

@@ -1,27 +1,27 @@
 ﻿using AutoMapper;
 using MediatR;
-using PabLab.Application.Dtos.Course;
+using PabLab.Application.Dtos.Student;
 using PabLab.Domain.Abstractions;
 
-namespace PabLab.Application.Queries.Course.GetCourseById;
+namespace PabLab.Application.Queries.Student.GetStudentById;
 
-internal class GetStudentByIdQueryHandler : IRequestHandler<GetCourseByIdQuery, CourseDto>
+internal class GetStudentByIdQueryHandler : IRequestHandler<GetStudentByIdQuery, StudentDto>
 {
-    private readonly ICourseRepository _courseRepository;
+    private readonly IStudentRepository _studentRepository;
     private readonly IMapper _mapper;
 
-    public GetStudentByIdQueryHandler(ICourseRepository courseRepository, IMapper mapper)
+    public GetStudentByIdQueryHandler(IStudentRepository studentRepository, IMapper mapper)
     {
-        _courseRepository = courseRepository;
+        _studentRepository = studentRepository;
         _mapper = mapper;
     }
 
-    public async Task<CourseDto> Handle(GetCourseByIdQuery request, CancellationToken cancellationToken)
+    public async Task<StudentDto> Handle(GetStudentByIdQuery request, CancellationToken cancellationToken)
     {
-        var course = await _courseRepository.GetByIdAsync(request.Id, cancellationToken);
+        var student = await _studentRepository.GetByIdAsync(request.Id, cancellationToken);
 
-        var courseDto = _mapper.Map<CourseDto>(course);
+        var studentDto = _mapper.Map<StudentDto>(student);
 
-        return courseDto;
+        return studentDto;
     }
 }

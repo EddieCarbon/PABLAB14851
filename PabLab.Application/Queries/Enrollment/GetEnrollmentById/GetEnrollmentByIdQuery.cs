@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using PabLab.Application.Dtos.Course;
+using PabLab.Application.Dtos.Enrollment;
 
-namespace PabLab.Application.Queries.Course.GetCourseById;
+namespace PabLab.Application.Queries.Enrollment.GetEnrollmentById;
 
-public record GetEnrollmentByIdQuery(int Id) : IRequest<CourseDto>;
+public record GetEnrollmentByIdQuery(int Id) : IRequest<EnrollmentDto>;

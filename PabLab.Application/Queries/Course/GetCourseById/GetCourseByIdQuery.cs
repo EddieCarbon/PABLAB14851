@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using ProductsApp.Application.Dtos;
+using PabLab.Application.Dtos.Course;
 
-namespace ProductsApp.Application.Queries.Products.GetProductById;
+namespace PabLab.Application.Queries.Course.GetCourseById;
 
-public record GetCourseByIdQuery(int Id) : IRequest<ProductDetailDto>;
+public record GetCourseByIdQuery(int Id) : IRequest<CourseDto>;

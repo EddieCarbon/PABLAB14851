@@ -1,13 +1,15 @@
 ﻿using MediatR;
 
-namespace PabLab.Application.Commands.Course.UpdateCourse
+namespace PabLab.Application.Commands.Student.UpdateStudent
 {
     public class UpdateStudentCommand : IRequest
     {
-        public int CourseId { get; set; }
+        public int StudentId { get; set; }
         
-        public string Title { get; set; }
-        
-        public int Credits { get; set; }
+        public string FirstName { get; set; }
+    
+        public string LastName { get; set; }
+    
+        public DateTime DateOfBirth { get; set; }
     }
 }

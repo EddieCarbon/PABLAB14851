@@ -1,22 +1,17 @@
 ﻿using FluentValidation;
-using ProductsApp.Domain.Abstractions;
 
-namespace ProductsApp.Application.Commands.Products.AddProduct;
+namespace PabLab.Application.Commands.Course.AddCourse;
 
-public class AddCourseCommandValidator : AbstractValidator<AddProductCommand>
+public class AddCourseCommandValidator : AbstractValidator<AddCourseCommand>
 {
     public AddCourseCommandValidator()
     {
-        RuleFor(x => x.Name)
-            .NotEmpty().WithMessage("Name is required.")
-            .MinimumLength(3).WithMessage("Name cannot be shorter the 3 character.")
-            .MaximumLength(200).WithMessage("Name cannot be longer the 200 character.");
+        RuleFor(x => x.Title)
+            .NotEmpty().WithMessage("Title is required.")
+            .MinimumLength(3).WithMessage("Title cannot be shorter the 3 character.")
+            .MaximumLength(200).WithMessage("Title cannot be longer the 200 character.");
             
-        RuleFor(x => x.Price)
-            .GreaterThan(0).WithMessage("Price cannot be less than 0.");
-
-        RuleFor(x => x.Description)
-            .NotEmpty().WithMessage("Description is required.")
-            .MaximumLength(2000).WithMessage("Description cannot be longer the 2000 character.");
+        RuleFor(x => x.Credits)
+            .GreaterThan(0).WithMessage("Credits cannot be less than 0.");
     }
 }

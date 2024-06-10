@@ -2,36 +2,37 @@
 using PabLab.Domain.Abstractions;
 using PabLab.Domain.Exceptions;
 
-namespace PabLab.Application.Commands.Course.UpdateCourse
+namespace PabLab.Application.Commands.Student.UpdateStudent
 {
-    internal class UpdateStudentCommandHandler : IRequestHandler<UpdateCourseCommand>
+    internal class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand>
     {
-        private readonly ICourseRepository _courseRepository;
+        private readonly IStudentRepository _studentRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateStudentCommandHandler(ICourseRepository courseRepository, IUnitOfWork unitOfWork)
+        public UpdateStudentCommandHandler(IStudentRepository studentRepository, IUnitOfWork unitOfWork)
         {
-            _courseRepository = courseRepository;
+            _studentRepository = studentRepository;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Handle(UpdateCourseCommand request, CancellationToken cancellationToken)
+        public async Task Handle(UpdateStudentCommand request, CancellationToken cancellationToken)
         {
-            var product = await _courseRepository.GetByIdAsync(request.CourseId, cancellationToken);
-            if (product == null)
-                throw new NotFoundException(request.CourseId);
+            var student = await _studentRepository.GetByIdAsync(request.StudentId, cancellationToken);
+            if (student == null)
+                throw new NotFoundException(request.StudentId);
 
-            if (product.Title != request.Title)
+            if (student.FirstName != request.FirstName || student.LastName != request.LastName)
             {
-                bool isAlreadyExist = await _courseRepository.IsAlreadyExistAsync(request.Title, cancellationToken);
+                bool isAlreadyExist = await _studentRepository.IsAlreadyExistAsync(request.FirstName, request.LastName, cancellationToken);
                 if (isAlreadyExist)
-                    throw new AlreadyExistsException(request.Title);
+                    throw new AlreadyExistsException(request.FirstName + request.LastName);
             }
 
-            product.Title = request.Title;
-            product.Credits = request.Credits;
+            student.FirstName = request.FirstName;
+            student.LastName = request.LastName;
+            student.DateOfBirth = request.DateOfBirth;
 
-            _courseRepository.Update(product);
+            _studentRepository.Update(student);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
     }

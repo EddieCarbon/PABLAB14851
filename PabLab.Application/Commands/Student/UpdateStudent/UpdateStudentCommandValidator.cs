@@ -1,18 +1,23 @@
 ﻿using FluentValidation;
+using PabLab.Application.Commands.Course.UpdateCourse;
 
-namespace PabLab.Application.Commands.Course.UpdateCourse
+namespace PabLab.Application.Commands.Student.UpdateStudent;
+
+public class UpdateStudentCommandValidator : AbstractValidator<UpdateStudentCommand>
 {
-    public class UpdateStudentCommandValidator : AbstractValidator<UpdateCourseCommand>
+    public UpdateStudentCommandValidator()
     {
-        public UpdateStudentCommandValidator()
-        {
-            RuleFor(x => x.Title)
-                .NotEmpty().WithMessage("Title is required.")
-                .MinimumLength(3).WithMessage("Title cannot be shorter the 3 character.")
-                .MaximumLength(200).WithMessage("Title cannot be longer the 200 character.");
+        RuleFor(x => x.FirstName)
+            .NotEmpty().WithMessage("FirstName is required.")
+            .MinimumLength(3).WithMessage("FirstName cannot be shorter the 3 character.")
+            .MaximumLength(200).WithMessage("FirstName cannot be longer the 200 character.");
 
-            RuleFor(x => x.Credits)
-                .GreaterThan(0).WithMessage("Credits cannot be less than 0.");
-        }
+        RuleFor(x => x.LastName)
+            .NotEmpty().WithMessage("LastName is required.")
+            .MinimumLength(3).WithMessage("LastName cannot be shorter the 3 character.")
+            .MaximumLength(200).WithMessage("LastName cannot be longer the 200 character.");
+
+        RuleFor(x => x.DateOfBirth)
+            .NotEmpty().WithMessage("DateOfBirth is required.");
     }
 }

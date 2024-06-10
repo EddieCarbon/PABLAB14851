@@ -1,22 +1,15 @@
 ﻿using FluentValidation;
 
-namespace PabLab.Application.Commands.Student.AddStudent;
+namespace PabLab.Application.Commands.Enrollment.AddEnrollment;
 
-public class AddEnrollmentCommandValidator : AbstractValidator<AddStudentCommand>
+public class AddEnrollmentCommandValidator : AbstractValidator<AddEnrollmentCommand>
 {
     public AddEnrollmentCommandValidator()
     {
-        RuleFor(x => x.FirstName)
-            .NotEmpty().WithMessage("FirstName is required.")
-            .MinimumLength(3).WithMessage("FirstName cannot be shorter the 3 character.")
-            .MaximumLength(200).WithMessage("FirstName cannot be longer the 200 character.");
+        RuleFor(x => x.StudentId)
+            .NotEmpty().WithMessage("StudentId is required.");
             
-        RuleFor(x => x.LastName)
-            .NotEmpty().WithMessage("FirstName is required.")
-            .MinimumLength(3).WithMessage("FirstName cannot be shorter the 3 character.")
-            .MaximumLength(200).WithMessage("FirstName cannot be longer the 200 character.");
-
-        RuleFor(x => x.DateOfBirth)
-            .NotEmpty().WithMessage("Date of Birth is required.");
+        RuleFor(x => x.CourseId)
+            .NotEmpty().WithMessage("CourseId is required.");
     }
 }

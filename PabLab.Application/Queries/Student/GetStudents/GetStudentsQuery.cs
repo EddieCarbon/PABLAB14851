@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using PabLab.Application.Dtos.Course;
+using PabLab.Application.Dtos.Student;
 
-namespace PabLab.Application.Queries.Course.GetCourses;
+namespace PabLab.Application.Queries.Student.GetStudents;
 
-public record GetStudentsQuery() : IRequest<CourseListDto>; 
+public record GetStudentsQuery() : IRequest<StudentListDto>; 

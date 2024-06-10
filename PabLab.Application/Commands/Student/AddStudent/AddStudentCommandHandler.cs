@@ -2,32 +2,33 @@
 using PabLab.Domain.Abstractions;
 using PabLab.Domain.Exceptions;
 
-namespace PabLab.Application.Commands.Course.AddCourse;
+namespace PabLab.Application.Commands.Student.AddStudent;
 
-internal class AddStudentCommandHandler : IRequestHandler<AddCourseCommand>
+internal class AddStudentCommandHandler : IRequestHandler<AddStudentCommand>
 {
-    private readonly ICourseRepository _courseRepository;
+    private readonly IStudentRepository _studentRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public AddStudentCommandHandler(ICourseRepository courseRepository, IUnitOfWork unitOfWork)
+    public AddStudentCommandHandler(IStudentRepository studentRepository, IUnitOfWork unitOfWork)
     {
-        _courseRepository = courseRepository;
+        _studentRepository = studentRepository;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(AddCourseCommand request, CancellationToken cancellationToken)
+    public async Task Handle(AddStudentCommand request, CancellationToken cancellationToken)
     {
-        bool isAlreadyExist = await _courseRepository.IsAlreadyExistAsync(request.Title, cancellationToken);
+        bool isAlreadyExist = await _studentRepository.IsAlreadyExistAsync(request.FirstName, request.LastName, cancellationToken);
         if (isAlreadyExist) 
-            throw new AlreadyExistsException(request.Title);
+            throw new AlreadyExistsException(request.FirstName + request.LastName);
 
-        var newCourse = new Domain.Entities.Course()
+        var newStudent = new Domain.Entities.Student()
         {
-            Title = request.Title,
-            Credits = request.Credits
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            DateOfBirth = request.DateOfBirth
         };
 
-        _courseRepository.Add(newCourse);
+        _studentRepository.Add(newStudent);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

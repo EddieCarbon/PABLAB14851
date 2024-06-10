@@ -1,6 +1,14 @@
+using System.Net;
+using PabLab.Domain.Exceptions.Abstractions;
+
 namespace PabLab.Application.Identity.Exceptions;
 
-public class UserAlreadyExistsByNameException
+public class UserAlreadyExistsByNameException : BaseException
 {
-    
+    public UserAlreadyExistsByNameException(string name) 
+        : base($"User with name {name} is already exists.")
+    {
+    }
+
+    public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 }

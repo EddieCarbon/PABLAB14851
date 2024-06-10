@@ -1,8 +1,6 @@
 ﻿using FluentValidation;
-using ProductsApp.Application.Identity.Classes;
-using ProductsApp.Application.Identity.Enums;
 
-namespace ProductsApp.Application.Commands.Identity.ResetPassword;
+namespace PabLab.Application.Commands.Identity.ResetPassword;
 
 public class ResetPasswordCommandValidator : AbstractValidator<ResetPasswordCommand>
 {
@@ -12,7 +10,6 @@ public class ResetPasswordCommandValidator : AbstractValidator<ResetPasswordComm
         RuleFor(x => x.Email).EmailAddress().WithMessage("Incorrect email format.");
 
         RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required.");
-        RuleFor(x => x).Must(x => PasswordManager.CheckPasswordStrength(x.Password) != PasswordScore.VeryStrong).WithMessage("Password is not very strong.").WithName("Password");
         RuleFor(x => x.ConfirmPassword).NotEmpty().WithMessage("Confirm password is required.");
         RuleFor(x => x).Must(x => ComparePasswords(x.Password, x.ConfirmPassword)).WithMessage("Passwords are not equal.").WithName("ConfirmPassword");
     }

@@ -1,42 +1,38 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using MediatR;
-using ProductsApp.Application.Commands.Products.AddProduct;
-using ProductsApp.Domain.Abstractions;
-using ProductsApp.Domain.Entities;
-using ProductsApp.Domain.Exceptions;
+﻿using MediatR;
+using PabLab.Domain.Abstractions;
+using PabLab.Domain.Exceptions;
 
-namespace ProductsApp.Application.Commands.Products.UpdateProduct;
-
-internal class UpdateCourseCommandHandler : IRequestHandler<UpdateCourseCommand>
+namespace PabLab.Application.Commands.Course.UpdateCourse
 {
-    private readonly IProductRepository _productRepository;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public UpdateCourseCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork)
+    internal class UpdateCourseCommandHandler : IRequestHandler<UpdateCourseCommand>
     {
-        _productRepository = productRepository;
-        _unitOfWork = unitOfWork;
-    }
+        private readonly ICourseRepository _courseRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-    public async Task Handle(UpdateCourseCommand request, CancellationToken cancellationToken)
-    {
-        var product = await _productRepository.GetByIdAsync(request.Id, cancellationToken);
-        if (product == null)
-            throw new ProductNotFoundException(request.Id);
-
-        if (product.Name != request.Name)
+        public UpdateCourseCommandHandler(ICourseRepository courseRepository, IUnitOfWork unitOfWork)
         {
-            bool isAlreadyExist = await _productRepository.IsAlreadyExistAsync(request.Name, cancellationToken);
-            if (isAlreadyExist)
-                throw new ProductAlreadyExistsException(request.Name);
+            _courseRepository = courseRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        product.Name = request.Name;
-        product.Price = request.Price;
-        product.Description = request.Description;
+        public async Task Handle(UpdateCourseCommand request, CancellationToken cancellationToken)
+        {
+            var product = await _courseRepository.GetByIdAsync(request.CourseId, cancellationToken);
+            if (product == null)
+                throw new NotFoundException(request.CourseId);
 
-        _productRepository.Update(product);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+            if (product.Title != request.Title)
+            {
+                bool isAlreadyExist = await _courseRepository.IsAlreadyExistAsync(request.Title, cancellationToken);
+                if (isAlreadyExist)
+                    throw new AlreadyExistsException(request.Title);
+            }
+
+            product.Title = request.Title;
+            product.Credits = request.Credits;
+
+            _courseRepository.Update(product);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+        }
     }
 }

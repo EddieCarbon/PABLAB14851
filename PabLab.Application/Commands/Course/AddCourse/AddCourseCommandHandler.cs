@@ -1,37 +1,33 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using MediatR;
-using ProductsApp.Domain.Abstractions;
-using ProductsApp.Domain.Entities;
-using ProductsApp.Domain.Exceptions;
+﻿using MediatR;
+using PabLab.Domain.Abstractions;
+using PabLab.Domain.Exceptions;
 
-namespace ProductsApp.Application.Commands.Products.AddProduct;
+namespace PabLab.Application.Commands.Course.AddCourse;
 
-internal class AddCourseCommandHandler : IRequestHandler<AddProductCommand>
+internal class AddCourseCommandHandler : IRequestHandler<AddCourseCommand>
 {
-    private readonly IProductRepository _productRepository;
+    private readonly ICourseRepository _courseRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public AddCourseCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork)
+    public AddCourseCommandHandler(ICourseRepository courseRepository, IUnitOfWork unitOfWork)
     {
-        _productRepository = productRepository;
+        _courseRepository = courseRepository;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(AddProductCommand request, CancellationToken cancellationToken)
+    public async Task Handle(AddCourseCommand request, CancellationToken cancellationToken)
     {
-        bool isAlreadyExist = await _productRepository.IsAlreadyExistAsync(request.Name, cancellationToken);
+        bool isAlreadyExist = await _courseRepository.IsAlreadyExistAsync(request.Title, cancellationToken);
         if (isAlreadyExist) 
-            throw new ProductAlreadyExistsException(request.Name);
+            throw new AlreadyExistsException(request.Title);
 
-        var newProduct = new Product()
+        var newCourse = new Domain.Entities.Course()
         {
-            Name = request.Name,
-            Price = request.Price,
-            Description = request.Description
+            Title = request.Title,
+            Credits = request.Credits
         };
 
-        _productRepository.Add(newProduct);
+        _courseRepository.Add(newCourse);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

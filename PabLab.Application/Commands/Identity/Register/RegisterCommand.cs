@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ProductsApp.Application.Commands.Identity.Register;
+namespace PabLab.Application.Commands.Identity.Register;
 
 public class RegisterCommand : IRequest
 {
@@ -9,5 +9,4 @@ public class RegisterCommand : IRequest
     public string Password { get; set; }
     public int Age { get; set; }
     public string Role { get; set; }
-    
 }

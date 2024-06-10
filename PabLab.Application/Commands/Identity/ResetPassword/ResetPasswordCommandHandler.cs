@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using ProductsApp.Application.Identity;
-using ProductsApp.Application.Identity.Exceptions;
+using PabLab.Application.Identity;
+using PabLab.Application.Identity.Exceptions;
 
-namespace ProductsApp.Application.Commands.Identity.ResetPassword;
+namespace PabLab.Application.Commands.Identity.ResetPassword;
 
 internal class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand>
 {

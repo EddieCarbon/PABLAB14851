@@ -1,12 +1,10 @@
 ﻿using MediatR;
 
-namespace PabLab.Application.Commands.Student.AddStudent;
+namespace PabLab.Application.Commands.Enrollment.AddEnrollment;
 
 public class AddEnrollmentCommand : IRequest
 {
-    public string FirstName { get; set; }
+    public int StudentId { get; set; }
     
-    public string LastName { get; set; }
-    
-    public DateTime DateOfBirth { get; set; }
+    public int CourseId { get; set; }
 }

@@ -1,28 +1,27 @@
 ﻿using MediatR;
-using ProductsApp.Application.Commands.Products.UpdateProduct;
-using ProductsApp.Domain.Abstractions;
-using ProductsApp.Domain.Exceptions;
+using PabLab.Domain.Abstractions;
+using PabLab.Domain.Exceptions;
 
-namespace ProductsApp.Application.Commands.Products.RemoveProduct;
+namespace PabLab.Application.Commands.Course.RemoveCourse;
 
 internal class RemoveCourseCommandHandler : IRequestHandler<RemoveCourseCommand>
 {
-    private readonly IProductRepository _productRepository;
+    private readonly ICourseRepository _courseRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public RemoveCourseCommandHandler(IProductRepository productRepository, IUnitOfWork unitOfWork)
+    public RemoveCourseCommandHandler(ICourseRepository courseRepository, IUnitOfWork unitOfWork)
     {
-        _productRepository = productRepository;
+        _courseRepository = courseRepository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task Handle(RemoveCourseCommand request, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.GetByIdAsync(request.Id, cancellationToken);
+        var product = await _courseRepository.GetByIdAsync(request.Id, cancellationToken);
         if (product == null)
-            throw new ProductNotFoundException(request.Id);
+            throw new NotFoundException(request.Id);
 
-        _productRepository.Delete(product);
+        _courseRepository.Delete(product);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }
